@@ -3,7 +3,7 @@
 	"package": "com.example.xpose.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
+		"BlockModelRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
