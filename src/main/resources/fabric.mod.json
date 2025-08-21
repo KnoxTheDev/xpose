@@ -3,15 +3,15 @@
 	"id": "xpose",
 	"version": "${version}",
 	"name": "xpose",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Ever wanted to see the world for what it truly hides? This mod doesn’t give you powers… it just removes a few layers. Nothing sus here, trust me.",
 	"authors": [
-		"Me!"
+		"knox"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/KnoxTheDev/xpose"
 	},
-	"license": "CC0-1.0",
+	"license": "LGPL-2.1",
 	"icon": "assets/xpose/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -24,11 +24,8 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.17.2",
-		"minecraft": "~1.21.8",
+		"minecraft": "*",
 		"java": ">=21",
 		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
 	}
 }
