@@ -3,24 +3,22 @@ name: Extract Zip
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write   # allow pushing commits
+
 jobs:
   unzip:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # use built-in token
 
       - name: Unzip file into root (preserve LICENSE)
         run: |
-          # Move LICENSE aside if it exists
           if [ -f LICENSE ]; then mv LICENSE LICENSE.bak; fi
-
-          # Unzip into repo root, overwrite existing files
           unzip -o xpose-1.21.8.zip -d .
-
-          # Restore LICENSE
           if [ -f LICENSE.bak ]; then mv LICENSE.bak LICENSE; fi
-
-          # Remove the zip file
           rm xpose-1.21.8.zip
 
       - name: Commit changes
