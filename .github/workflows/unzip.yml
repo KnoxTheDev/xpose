@@ -4,27 +4,38 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write   # allow pushing commits
-  workflows: write
+  contents: write   # allow push for normal files
+
 jobs:
   unzip:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # use built-in token
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Unzip file into root (preserve LICENSE)
         run: |
+          # Backup LICENSE if it exists
           if [ -f LICENSE ]; then mv LICENSE LICENSE.bak; fi
+
+          # Unzip into repo root, overwrite existing files
           unzip -o xpose-1.21.8.zip -d .
+
+          # Restore LICENSE if needed
           if [ -f LICENSE.bak ]; then mv LICENSE.bak LICENSE; fi
+
+          # Remove the original zip
           rm xpose-1.21.8.zip
 
-      - name: Commit changes
+      - name: Commit changes (excluding workflows)
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
+
           git add .
+          # Remove workflow files from staging to avoid permission issues
+          git reset .github/workflows/** || true
+
           git commit -m "Extract zip into repo root (preserved LICENSE)" || echo "No changes to commit"
           git push
